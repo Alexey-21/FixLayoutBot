@@ -3,6 +3,8 @@ from collections import namedtuple
 from telebot import types
 import sqlite3
 from datetime import datetime
+import threading
+from flask import Flask
 bot = telebot.TeleBot("8468360526:AAFbp5OfBIsw4nU6YNdmZVLnD1TcHcrcTEw", parse_mode='HTML')
 strelka = u"\U000027A1"
 opat_tonkosti = 0
@@ -229,4 +231,16 @@ def check_click_one(message):
             bot.delete_message(message.chat.id, message.message_id - 1)
             bot.delete_message(message.chat.id, message.message_id - 2)
 
-bot.polling(none_stop=True)
+app = Flask(__name__)
+
+@app.route('/')
+def health_check():
+    return 'OK', 200
+
+def run_bot():
+    bot.infinity_polling()
+
+if __name__ == '__main__':
+    # Запускаем бот в отдельном потоке
+    threading.Thread(target=run_bot).start()
+    app.run(host='0.0.0.0', port=8080)
