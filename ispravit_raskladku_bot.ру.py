@@ -191,7 +191,7 @@ def check_click_one(message):
                     pair_now = pair_raskladok[j]
                     if pair_now.second == fix_rask[i]:
                         symbol_num = j
-                if symbol_num == None:
+                if symbol_num == '':
                     bot.send_message(message.chat.id, 'Ты выбрал перевод с русской раскладки на английскую, а написал сообщение на английском, а не на русском.\n\nЕсли тебе нужно перевести сообщение с английской раскладки на русскую, то напиши /fix и выбери этот вариант')
                     eror_1 = 'yes'
                     break
@@ -244,3 +244,4 @@ if __name__ == '__main__':
     # Запускаем бот в отдельном потоке
     threading.Thread(target=run_bot).start()
     app.run(host='0.0.0.0', port=8080)
+
